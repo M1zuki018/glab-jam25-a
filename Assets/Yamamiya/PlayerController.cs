@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] DistanceGauge _distanceGauge;
     [SerializeField] Transform _targetPos;
     [SerializeField] Vector3 _startPos; 
     [SerializeField,Tooltip("ターゲットとの距離")] float _distance;
@@ -13,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField,Tooltip("移動させるキー")] KeyCode _moveKey;
     GameObject _nearShelter;
     [SerializeField,Tooltip("継続時間")] float _duration;
+
+    [SerializeField] Animator _animator;
 
     private void Start()
     {
@@ -27,6 +30,11 @@ public class PlayerController : MonoBehaviour
         {
             MovePlayer();
         }
+        else
+        {
+            _animator.SetBool("IsMove", false);
+        }
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -44,14 +52,16 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void MovePlayer()
     {
+        _animator.SetBool("IsMove", true);
         _player.position += Vector3.forward * _speed * Time.deltaTime;
+        _distanceGauge.UIUpdate(GetDistance());
     }
 
     /// <summary>
     /// 距離の割合を取得
     /// </summary>
     /// <returns></returns>
-    public float GetDistance()
+    private float GetDistance()
     {
         return _player.position.z / _distance;
     }
