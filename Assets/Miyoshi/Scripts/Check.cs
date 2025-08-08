@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Check : EnemyRotation
 {
-    private float timer;
+    private float timer3;
 
     public override void Update()
     {
@@ -12,11 +12,11 @@ public class Check : EnemyRotation
         base.Update();
 
         // その後、子クラス側の処理
-        timer += Time.deltaTime;
-        if (timer >=2)
+        timer3 += Time.deltaTime;
+        if (timer3 >=3)
         {
-            Debug.Log("Check: " + interval);
-            timer = 0f;
+            //Debug.Log("Check: " + interval1);
+            timer3 = 0f;
         }
     }
 }
