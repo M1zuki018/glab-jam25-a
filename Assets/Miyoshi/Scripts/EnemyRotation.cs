@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class EnemyRotation : MonoBehaviour
 {
-    [SerializeField] private int max_Interval = 5; // 回転間隔(秒)
-    [SerializeField] private int min_Interval = 1; // 回転間隔(秒)
+    [SerializeField] private float max_Interval = 5; // 回転間隔(秒)
+    [SerializeField] private float min_Interval = 1; // 回転間隔(秒)
     [SerializeField] private float backInterval = 0.5f; // 後ろを向く間隔(秒)
     [SerializeField] private float rotateAngleY = 45f; // 1回あたりの回転角度(Y)
     bool isBack = false; // 後ろを向いているかどうか
 
-    public int interval = 3; // 回転間隔
+    public float interval = 3; // 回転間隔
     private float timer;
 
-    void Update()
+    public virtual void Update()
     {
         // 経過時間を加算
         timer += Time.deltaTime;
          // 回転間隔をランダムに設定
         // 一定時間経過したら回転
         if (timer >= interval)
-        {
-            
+        { 
             // 現在のRotationを取得してY軸に加算
             transform.rotation = Quaternion.Euler(
                 transform.rotation.eulerAngles.x,
@@ -50,6 +49,5 @@ public class EnemyRotation : MonoBehaviour
                 isBack = false; // 後ろを向く状態を解除
             }
         }
-
     }
 }
