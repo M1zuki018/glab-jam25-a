@@ -16,14 +16,8 @@ public class DistanceGauge : MonoBehaviour
         _distanceGauge.fillAmount = 0f;
     }
 
-    private void Update()
+    public void UIUpdate( float _magnification)
     {
-        UIUpdate();
-    }
-    
-    void UIUpdate()
-    {
-        _magnification = _player.GetDistance();
         DOTween.To(
             () => _distanceGauge.fillAmount,
             amount => _distanceGauge.fillAmount = amount,
