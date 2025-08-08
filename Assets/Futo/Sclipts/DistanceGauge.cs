@@ -9,8 +9,6 @@ public class DistanceGauge : MonoBehaviour
 
     [SerializeField] private float _duration = 1;
 
-    float _magnification;
-
     void Start()
     {
         _distanceGauge.fillAmount = 0f;
