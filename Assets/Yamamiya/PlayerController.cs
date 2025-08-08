@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Transform targetPos;
+    [SerializeField] Transform startPos; 
     [SerializeField,Tooltip("ターゲットとの距離")] float distance;
 
     [Header("Player")]
@@ -16,7 +17,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         player = GetComponent<Transform>();
-        UpdateDistance();
+        startPos = player;
+        distance = targetPos.position.z - player.position.z;
     }
 
     void Update()
@@ -38,7 +40,16 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateDistance()
     {
-        distance = targetPos.position.z - player.position.z;
+        Debug.Log(GetDistance());
+    }
+
+    /// <summary>
+    /// 距離の割合を取得
+    /// </summary>
+    /// <returns></returns>
+    public float GetDistance()
+    {
+        return player.position.z / distance;
     }
 
     private void OnTriggerEnter(Collider other)
