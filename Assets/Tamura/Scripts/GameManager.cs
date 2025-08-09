@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     private Image FadeImage;                                                     // フェード用の黒画像
 
-    private static GameManager instance;                                         // 自身のインスタンス
+    public static GameManager Instance;                                         // 自身のインスタンス
 
 
     // シングルトンパターンのインスタンスを取得するプロパティ
@@ -31,9 +31,9 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);  // シーンを超えて保持
         }
         else
