@@ -74,15 +74,6 @@ public class GameManager : MonoBehaviour
     private float time = 0;
     void Update()
     {
-        // ==== デバック ======
-        time += Time.deltaTime;
-        if (flag == false && time > 5)
-        {
-            flag = true;
-            ChangeScene(GameMainSceneName);
-        }
-        // ====================
-
     }
 
     // シーンを切り替えるメソッド(トランジション処理付き)
