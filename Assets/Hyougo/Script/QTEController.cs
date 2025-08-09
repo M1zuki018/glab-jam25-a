@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class QTEController : EnemyRotation
@@ -8,15 +9,16 @@ public class QTEController : EnemyRotation
     public Text qteText;// QTEの指示を表示するテキスト
     [Header("QTE設定")]
     public float qteDuration = 2f;// QTEの制限時間
+    public int keySequenceLength = 3; // 必要なキー入力の数
     public KeyCode[] qteKeys = new KeyCode[] { KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.W };// ランダムに選ばれるQTEのキー候補
     [Header("QTE対象プレイヤー")]
     public GameObject player;// QTEの対象とするプレイヤーのタグ
     private GameObject targetPlayer;// "Player1"タグを持つオブジェクトの参照
     private bool isQTEActive = false;// 現在QTE中かどうか
     private float qteTimer = 0f;// QTE中の経過時間
-    private KeyCode currentKey;// 今回要求するQTEキー
+    private KeyCode[] currentKeys;// 今回要求するQTEキー
+    private int currentIndex = 0;     // 現在押すべきキーのインデックス
     private bool _prevIsBack = true;// 直前の「背を向けている状態」の保存用
-    private float _waitingTime;
 
 
 
@@ -28,7 +30,6 @@ public class QTEController : EnemyRotation
     public override void Update()
     {
         base.Update();
-        _waitingTime += Time.deltaTime;
 
         if (targetPlayer == null) return;
 
@@ -36,7 +37,6 @@ public class QTEController : EnemyRotation
         if (_isBack && !_prevIsBack && !isQTEActive)
         {
             StartQTE();
-            _waitingTime = 0;
         }
 
         _prevIsBack = _isBack;
@@ -47,7 +47,7 @@ public class QTEController : EnemyRotation
         }
     }
 
-    private void EndQTE()
+    private async Task EndQTE()
     {
         isQTEActive = false;
 
@@ -59,6 +59,8 @@ public class QTEController : EnemyRotation
         );
         if (_waitTime == true && _isBack == true)
         {
+            await Task.Delay((int)900);
+
             if (player.GetComponent<PlayerController>() != null)
             {
                 player.GetComponent<PlayerController>().BackOriginalPosX();
@@ -80,11 +82,18 @@ public class QTEController : EnemyRotation
         // 経過時間リセット
         qteTimer = 0f;
 
-        // ランダムにキーを1つ選ぶ
-        currentKey = qteKeys[Random.Range(0, qteKeys.Length)];
+        currentIndex = 0;
+
+        // ランダムにキーを3つ選ぶ
+        currentKeys = new KeyCode[keySequenceLength];
+        for (int i = 0; i < keySequenceLength; i++)
+        {
+            currentKeys[i] = qteKeys[Random.Range(0, qteKeys.Length)];
+        }
 
         // UIに「〇を押せ！」と表示
-        qteText.text = $"{currentKey} を押せ！";
+        qteText.text = string.Join("  ",currentKeys) + " を押せ！";
+
 
         // パネル表示
         qtePanel.SetActive(true);
@@ -98,36 +107,31 @@ public class QTEController : EnemyRotation
         // 経過時間を加算
         qteTimer += Time.deltaTime;
         // 正しいキーを押したら成功
-        if (Input.GetKeyDown(currentKey) && _waitingTime >= 0.9f)
+        if (Input.anyKeyDown)
         {
-            Debug.Log("Inputkey");
-
-            QTESuccess();
-
-        }
-        else
-        {
-            // 他のキーを押した場合は失敗
-            foreach (KeyCode key in qteKeys)
+            if (Input.GetKeyDown(currentKeys[currentIndex]))
             {
-                if (key != currentKey && Input.GetKeyDown(key))
+                currentIndex++;
+                if (currentIndex >= currentKeys.Length)
                 {
-
-                    QTEFailure();
-
-                    break;
+                    QTESuccess();
+                    return;
                 }
             }
+            else
+            {
+                QTEFailure();
+                return;
+            }
         }
-        // 時間切れも失敗とする
-        if (qteTimer > qteDuration)
+        if (qteTimer > qteDuration) // 時間切れ
         {
-
             QTEFailure();
-
-
         }
+
+
     }
+
     // QTE成功時の処理
     private void QTESuccess()
     {
