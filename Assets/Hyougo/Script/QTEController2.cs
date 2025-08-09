@@ -1,73 +1,90 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-// プレイヤー2に対してのみQTE（Quick Time Event）を発動するクラス。
-// 敵が振り向いたタイミングで、指定された矢印キーをプレイヤー2に押させる。
 public class QTEController2 : EnemyRotation
 {
     [Header("UI")]
     public GameObject qtePanel;// QTEのUIパネル
-    public Text qteText;// QTEで表示されるテキスト
+    public Text qteText;// QTEの指示を表示するテキスト
     [Header("QTE設定")]
     public float qteDuration = 2f;// QTEの制限時間
-    public KeyCode[] qteKeys = new KeyCode[]{KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow};// QTEで使用するキー
+    public KeyCode[] qteKeys = new KeyCode[] { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow };// ランダムに選ばれるQTEのキー候補
     [Header("QTE対象プレイヤー")]
-    public string playerTag = "Player2";// QTEの対象とするプレイヤーのタグ
-    private GameObject targetPlayer;// Player2の参照（タグで取得）
-    private bool isQTEActive = false;// QTEが現在アクティブかどうか
-    private float qteTimer = 0f;// QTEの経過時間
-    private KeyCode currentKey;// 今回のQTEで要求されるキー
-    private bool _prevIsBack = true;// 前のフレームで敵が後ろを向いていたかどうか
+    public GameObject player;// QTEの対象とするプレイヤーのタグ
+    private GameObject targetPlayer;// "Player1"タグを持つオブジェクトの参照
+    private bool isQTEActive = false;// 現在QTE中かどうか
+    private float qteTimer = 0f;// QTE中の経過時間
+    private KeyCode currentKey;// 今回要求するQTEキー
+    private bool _prevIsBack = true;// 直前の「背を向けている状態」の保存用
 
     void Start()
     {
-        // タグ「Player2」のオブジェクトを探す
-        targetPlayer = GameObject.FindGameObjectWithTag(playerTag);
+        // 最初に Player1 タグのついたオブジェクトを検索して保存
+        targetPlayer = GameObject.FindGameObjectWithTag("Player");
     }
     public override void Update()
     {
-        // EnemyRotationのUpdateを呼ぶ
         base.Update();
-        // Player2が見つからない場合は何もしない
+
         if (targetPlayer == null) return;
-        // 敵が後ろを向いていた → 振り向いた瞬間にQTEを開始
-        if (_prevIsBack && !_isBack && !isQTEActive)
+
+        // 「背を向いた瞬間」かつ QTE中でないなら開始
+        if (_isBack && !_prevIsBack && !isQTEActive)
         {
             StartQTE();
         }
-        // 現在の向き状態を次回比較用に保存
+
         _prevIsBack = _isBack;
-        // QTE中なら入力処理を行う
+
         if (isQTEActive)
         {
             HandleQTE();
         }
     }
-    // QTEを開始する
+
+    private void EndQTE()
+    {
+        isQTEActive = false;
+
+        // 前を向く
+        transform.rotation = Quaternion.Euler(
+            transform.rotation.eulerAngles.x,
+            transform.rotation.eulerAngles.y + 180f,
+            transform.rotation.eulerAngles.z
+        );
+
+        _isBack = false; // 正面向きフラグに戻す
+
+        Invoke(nameof(HideQTEPanel), 1f);
+    }
+    // QTEを開始する処理
     private void StartQTE()
     {
+        // QTE開始フラグ
         isQTEActive = true;
+        // 経過時間リセット
         qteTimer = 0f;
-        // ランダムで押させるキーを選択
+        // ランダムにキーを1つ選ぶ
         currentKey = qteKeys[Random.Range(0, qteKeys.Length)];
-        // テキストに矢印記号で指示を表示
-        qteText.text = $"{KeyToText(currentKey)} を押せ！";
-        // UIパネル表示
+        // UIに「〇を押せ！」と表示
+        qteText.text = $"{currentKey} を押せ！";
+        // パネル表示
         qtePanel.SetActive(true);
-        Debug.Log("QTE開始：Player2に対してのみ");
+        Debug.Log("QTE開始：Player1に対してのみ");
     }
     // QTE中の入力処理
     private void HandleQTE()
     {
+        // 経過時間を加算
         qteTimer += Time.deltaTime;
-        // 正解のキーを押したら成功
+        // 正しいキーを押したら成功
         if (Input.GetKeyDown(currentKey))
         {
             QTESuccess();
         }
         else
         {
-            // 間違ったキーを押したら失敗
+            // 他のキーを押した場合は失敗
             foreach (KeyCode key in qteKeys)
             {
                 if (key != currentKey && Input.GetKeyDown(key))
@@ -77,7 +94,7 @@ public class QTEController2 : EnemyRotation
                 }
             }
         }
-        // 時間切れで失敗
+        // 時間切れも失敗とする
         if (qteTimer > qteDuration)
         {
             QTEFailure();
@@ -86,25 +103,28 @@ public class QTEController2 : EnemyRotation
     // QTE成功時の処理
     private void QTESuccess()
     {
-        Debug.Log("QTE成功 (Player2)");
+        Debug.Log("QTE成功");
         qteText.text = "成功！";
         EndQTE();
     }
     // QTE失敗時の処理
     private void QTEFailure()
     {
-        Debug.Log("QTE失敗 (Player2)");
+        Debug.Log("QTE失敗");
         qteText.text = "失敗！";
         EndQTE();
     }
-    // QTE終了処理（UIを非表示にし、状態リセット）
-    private void EndQTE()
-    {
-        isQTEActive = false;
-        // 1秒後にパネルを非表示
-        Invoke(nameof(HideQTEPanel), 1f); 
-    }
-    // QTEのUIパネルを非表示にする
+    // QTE終了時の処理（1秒後にUIを非表示にする）
+    //private void EndQTE()
+    //{
+    //    // フラグリセット
+    //    isQTEActive = false;
+
+    //    _isBack = false; // QTE終了後は背を向けている状態に戻す
+    //    // 1秒後にパネルを非表示
+    //    Invoke(nameof(HideQTEPanel), 1f);
+    //}
+    // UIを非表示にする処理
     private void HideQTEPanel()
     {
         qtePanel.SetActive(false);

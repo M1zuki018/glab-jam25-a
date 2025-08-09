@@ -17,19 +17,19 @@ MonoBehaviour:
     _type: 0
     _isLoop: 1
     _playOnAwake: 0
-    _volume: 0
+    _volume: 1
     _clip: {fileID: 0}
   - _key: InGame
     _type: 0
     _isLoop: 1
     _playOnAwake: 0
-    _volume: 0
+    _volume: 0.548
     _clip: {fileID: 8300000, guid: 88c64a3d182524d498f623fad278bd54, type: 3}
   - _key: InResult
     _type: 0
     _isLoop: 1
     _playOnAwake: 0
-    _volume: 0
+    _volume: 0.452
     _clip: {fileID: 0}
   - _key: Button
     _type: 1
@@ -62,8 +62,8 @@ MonoBehaviour:
     _volume: 0
     _clip: {fileID: 8300000, guid: ec3b80e0a1e4e2c47ad9e431bd2645e5, type: 3}
   - _key: foot
-    _type: 1
-    _isLoop: 0
+    _type: 0
+    _isLoop: 1
     _playOnAwake: 0
-    _volume: 0
+    _volume: 1
     _clip: {fileID: 8300000, guid: b3c6c4b12580be24daa20c740fcd8f15, type: 3}

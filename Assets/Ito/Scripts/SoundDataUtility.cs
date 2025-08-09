@@ -12,6 +12,7 @@ public static class SoundDataUtility
             public static readonly string Turnaround = "Turnaround";
             public static readonly string hide = "hide";
             public static readonly string foot = "foot";
+            public static readonly string finish = "finish";
         }
 
         public static class Bgm
