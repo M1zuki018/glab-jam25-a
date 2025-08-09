@@ -18,13 +18,13 @@ MonoBehaviour:
     _isLoop: 1
     _playOnAwake: 0
     _volume: 1
-    _clip: {fileID: 0}
+    _clip: {fileID: 8300000, guid: 0ab623640d7e686428123ea985e9e6a6, type: 3}
   - _key: InGame
     _type: 0
     _isLoop: 1
     _playOnAwake: 0
-    _volume: 0.548
-    _clip: {fileID: 8300000, guid: 88c64a3d182524d498f623fad278bd54, type: 3}
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 51619257fbf25514db2727a4f648e8e4, type: 3}
   - _key: InResult
     _type: 0
     _isLoop: 1
@@ -35,31 +35,31 @@ MonoBehaviour:
     _type: 1
     _isLoop: 0
     _playOnAwake: 0
-    _volume: 0
+    _volume: 0.602
     _clip: {fileID: 0}
-  - _key: Success
+  - _key: Success1
     _type: 1
     _isLoop: 0
     _playOnAwake: 0
-    _volume: 0
-    _clip: {fileID: 8300000, guid: 9c8ed0482d9e62f42bb4fbd9a192f4db, type: 3}
+    _volume: 0.457
+    _clip: {fileID: 8300000, guid: 5ee3dfc3bd87c124aa40e0fa021b2823, type: 3}
   - _key: Miss
     _type: 1
     _isLoop: 0
     _playOnAwake: 0
-    _volume: 0.061
+    _volume: 0.618
     _clip: {fileID: 8300000, guid: 38eccc9288514e648a8bd8be113fb27e, type: 3}
   - _key: Turnaround
     _type: 1
     _isLoop: 0
     _playOnAwake: 0
-    _volume: 0
+    _volume: 0.623
     _clip: {fileID: 8300000, guid: 5ef48277f3d6dfd44b547232dfb746be, type: 3}
   - _key: hide
     _type: 1
     _isLoop: 0
     _playOnAwake: 0
-    _volume: 0
+    _volume: 0.57
     _clip: {fileID: 8300000, guid: ec3b80e0a1e4e2c47ad9e431bd2645e5, type: 3}
   - _key: foot
     _type: 0
@@ -73,3 +73,27 @@ MonoBehaviour:
     _playOnAwake: 0
     _volume: 1
     _clip: {fileID: 8300000, guid: 2e9502075bdd2fa4197973b2acbd134d, type: 3}
+  - _key: Success2
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 0.74
+    _clip: {fileID: 8300000, guid: ba53d8541972ac04dbb221a62e303b94, type: 3}
+  - _key: Success3
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: fab0b29774ddd424184d8e01b8d2ffad, type: 3}
+  - _key: Success4
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 1bb4af813b05dc74da4dcdb05bbe5897, type: 3}
+  - _key: Success5
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 0
+    _volume: 1
+    _clip: {fileID: 8300000, guid: d8217ca57ab6c4942a524be623042ba2, type: 3}
