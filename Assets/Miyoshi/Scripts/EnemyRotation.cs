@@ -25,6 +25,7 @@ public class EnemyRotation : MonoBehaviour
     [SerializeField] public float _interval2 = 2; // 回転間隔(ランダムに設定される)
     [SerializeField] public float _interval3 = 1; // 回転間隔(ランダムに設定される)
     private float _timer;
+    public bool _waitTime;
 
     public virtual void Update()
     {
@@ -42,6 +43,7 @@ public class EnemyRotation : MonoBehaviour
             _isBack = true; // 背を向いた瞬間
             _timer = 0f;
             _interval1 = Random.Range(min1_Interval, max1_Interval);
+            timerStart();
         }
 
         if (_timer >= _interval2 && _versions == 1)
@@ -56,6 +58,7 @@ public class EnemyRotation : MonoBehaviour
             _isBack = true;
             _timer = 0f;
             _interval2 = Random.Range(min2_Interval, max2_Interval);
+            timerStart();
         }
 
         if (_timer >= _interval3 && _versions == 2)
@@ -70,6 +73,12 @@ public class EnemyRotation : MonoBehaviour
             _isBack = true;
             _timer = 0f;
             _interval3 = Random.Range(min3_Interval, max3_Interval);
+            timerStart();
         }
+    }
+    
+    public virtual void timerStart()
+    {
+        _waitTime = true;
     }
 }
