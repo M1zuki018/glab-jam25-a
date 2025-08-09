@@ -19,7 +19,7 @@ public class EnemyRotation : MonoBehaviour
     [SerializeField] private float _backInterval = 0.5f; // 後ろを向く間隔(秒)
     [Header("回転角度")]
     [SerializeField] private float _rotateAngleY = 45f; // 1回あたりの回転角度(Y)
-    bool _isBack = false; // 後ろを向いているかどうか
+    protected bool _isBack = false; // 後ろを向いているかどうか
     [Header("それぞれのレベル最初の一回目の時間")]
     [SerializeField] public float _interval1 = 3; // 回転間隔(ランダムに設定される)
     [SerializeField] public float _interval2 = 2; // 回転間隔(ランダムに設定される)
