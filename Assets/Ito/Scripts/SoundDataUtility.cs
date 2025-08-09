@@ -7,7 +7,11 @@ public static class SoundDataUtility
         public static class Se
         {
             public static readonly string Button = "Button";
-            public static readonly string Success = "Success";
+            public static readonly string Success1 = "Success1";
+            public static readonly string Success2 = "Success2";
+            public static readonly string Success3 = "Success3";
+            public static readonly string Success4 = "Success4";
+            public static readonly string Success5 = "Success5";
             public static readonly string Miss = "Miss";
             public static readonly string Turnaround = "Turnaround";
             public static readonly string hide = "hide";

@@ -1,27 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditor.SearchService;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Test : MonoBehaviour
 {
     [SerializeField] AudioManager audioManager;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.foot);
+            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Se.Success1);
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            AudioManager.Instance.PhaseBGM();
+            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Se.Success2);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Se.Success3);
         }
         if(Input.GetKeyDown(KeyCode.R))
         {
-            AudioManager.Instance.RestartBGM();
+            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Se.Success4);
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.T))
         {
-          AudioManager.Instance.PlaySe(SoundDataUtility.KeyConfig.Se.Miss);
+            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Se.Success5);
         }
     }
+
+
 }
