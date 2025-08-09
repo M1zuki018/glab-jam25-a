@@ -24,22 +24,38 @@ public class QTEController : EnemyRotation
     }
     public override void Update()
     {
-        // EnemyRotation の Update 処理も呼ぶ
         base.Update();
-        // Player1 が存在しなければ何もしない
+
         if (targetPlayer == null) return;
-        // 「前は背を向けていた」→「今は振り向いている」かつ QTE中でない → QTE開始
-        if (_prevIsBack && !_isBack && !isQTEActive)
+
+        // 「背を向いた瞬間」かつ QTE中でないなら開始
+        if (_isBack && !_prevIsBack && !isQTEActive)
         {
             StartQTE();
         }
-        // _prevIsBack を現在の状態で更新して次のフレームに備える
+
         _prevIsBack = _isBack;
-        // QTE中なら処理を続ける
+
         if (isQTEActive)
         {
             HandleQTE();
         }
+    }
+
+    private void EndQTE()
+    {
+        isQTEActive = false;
+
+        // 前を向く
+        transform.rotation = Quaternion.Euler(
+            transform.rotation.eulerAngles.x,
+            transform.rotation.eulerAngles.y + 180f,
+            transform.rotation.eulerAngles.z
+        );
+
+        _isBack = false; // 正面向きフラグに戻す
+
+        Invoke(nameof(HideQTEPanel), 1f);
     }
     // QTEを開始する処理
     private void StartQTE()
@@ -99,13 +115,15 @@ public class QTEController : EnemyRotation
         EndQTE();
     }
     // QTE終了時の処理（1秒後にUIを非表示にする）
-    private void EndQTE()
-    {
-        // フラグリセット
-        isQTEActive = false;
-        // 1秒後にパネルを非表示
-        Invoke(nameof(HideQTEPanel), 1f);
-    }
+    //private void EndQTE()
+    //{
+    //    // フラグリセット
+    //    isQTEActive = false;
+
+    //    _isBack = false; // QTE終了後は背を向けている状態に戻す
+    //    // 1秒後にパネルを非表示
+    //    Invoke(nameof(HideQTEPanel), 1f);
+    //}
     // UIを非表示にする処理
     private void HideQTEPanel()
     {
