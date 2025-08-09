@@ -56,15 +56,15 @@ public class PlayerController : MonoBehaviour
             _isStartMove = true;
         }
 
-        //if (Input.GetKeyDown(KeyCode.V))
-        //{
-        //    HiddenShelter();
-        //}
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            HiddenShelter();
+        }
 
-        //if (Input.GetKeyDown(KeyCode.Return))
-        //{
-        //    BackOriginalPosX();
-        //}
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            BackOriginalPosX();
+        }
 
         //if(Input.GetMouseButtonDown(0))
         //{
@@ -128,10 +128,11 @@ public class PlayerController : MonoBehaviour
         _nearShelter = FindSearchNearShelter();
         if (_nearShelter != null)
         {
+            var targetPos = _nearShelter.transform.GetChild(0);
             _isHidden = true;
             _animator.SetBool("IsHidden", _isHidden);
             _player.transform.LookAt(_nearShelter.transform);
-            _player.DOMove(_nearShelter.transform.position - Vector3.forward, _duration);
+            _player.DOMove(targetPos.transform.position, _duration);
         }
     }
 
