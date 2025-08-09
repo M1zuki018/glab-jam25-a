@@ -43,6 +43,7 @@ public class EnemyRotation : MonoBehaviour
         {
             RotateEnemy();
             _interval1 = Random.Range(min1_Interval, max1_Interval);
+            PickMethod();
             timerStart();
         }
 
@@ -50,6 +51,7 @@ public class EnemyRotation : MonoBehaviour
         {
             RotateEnemy();
             _interval2 = Random.Range(min2_Interval, max2_Interval);
+            PickMethod();
             timerStart();
         }
 
@@ -57,6 +59,7 @@ public class EnemyRotation : MonoBehaviour
         {
             RotateEnemy();
             _interval3 = Random.Range(min3_Interval, max3_Interval);
+            PickMethod();
             timerStart();
         }
     }
