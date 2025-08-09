@@ -19,6 +19,7 @@ public static class SoundDataUtility
             public static readonly string InGame = "InGame";
             public static readonly string InTitle = "InTitle";
             public static readonly string InResult = "InResult";
+            public static readonly string foot = "foot";
         }
     }
 

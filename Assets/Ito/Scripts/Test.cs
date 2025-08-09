@@ -9,7 +9,7 @@ public class Test : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.InResult);
+            AudioManager.Instance.PlayBGM(SoundDataUtility.KeyConfig.Bgm.foot);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
