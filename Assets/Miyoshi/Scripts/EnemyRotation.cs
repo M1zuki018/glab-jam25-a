@@ -24,7 +24,7 @@ public class EnemyRotation : MonoBehaviour
     [SerializeField] public float _interval1 = 3; // 回転間隔(ランダムに設定される)
     [SerializeField] public float _interval2 = 2; // 回転間隔(ランダムに設定される)
     [SerializeField] public float _interval3 = 1; // 回転間隔(ランダムに設定される)
-    private float _timer;
+    public float _timer;
 
     public virtual void Update()
     {
@@ -79,20 +79,20 @@ public class EnemyRotation : MonoBehaviour
             _interval3 = 0; // 回転間隔をリセット
             _interval3 = Random.Range(min3_Interval, max3_Interval);
         }
-        if (_isBack)
-        { // 後ろを向いている場合は回転しない
-            if (_timer >= _backInterval)
-            {
-                // 後ろを向く
-                transform.rotation = Quaternion.Euler(
-                    transform.rotation.eulerAngles.x,
-                    transform.rotation.eulerAngles.y + 180f,
-                    transform.rotation.eulerAngles.z
-                );
-                // タイマーをリセット
-                _timer = 0f;
-                _isBack = false; // 後ろを向く状態を解除
-            }
-        }
+        //if (_isBack)
+        //{ // 後ろを向いている場合は回転しない
+        //    if (_timer >= _backInterval)
+        //    {
+        //        // 後ろを向く
+        //        transform.rotation = Quaternion.Euler(
+        //            transform.rotation.eulerAngles.x,
+        //            transform.rotation.eulerAngles.y + 180f,
+        //            transform.rotation.eulerAngles.z
+        //        );
+        //        // タイマーをリセット
+        //        _timer = 0f;
+        //        _isBack = false; // 後ろを向く状態を解除
+        //    }
+        //}
     }
 }
