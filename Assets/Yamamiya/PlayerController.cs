@@ -103,7 +103,11 @@ public class PlayerController : MonoBehaviour
             var enemyPos = _targetPos.transform.parent;
             _player.transform.LookAt(enemyPos);
             _animator.SetBool("IsGoal", _isGoal);
-            _player.DOMove(enemyPos.position, _goalDuration);
+            
+            _player.DOMove(enemyPos.position, _goalDuration).OnComplete (() =>
+            {
+                GameManager.Instance.ChangeScene("Result",Color.white);
+            });
         }
     }
 
