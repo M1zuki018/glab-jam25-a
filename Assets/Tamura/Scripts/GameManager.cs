@@ -70,15 +70,17 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    private bool flag = false;
-    private float time = 0;
     void Update()
     {
+
     }
 
     // シーンを切り替えるメソッド(トランジション処理付き)
-    public void ChangeScene(string sceneName)
+    // string sceneName : 遷移先のシーン名
+    // Color colorTransition : フェードの色
+    public void ChangeScene(string sceneName, Color colorTransition)
     {
+        FadeImage.color = colorTransition;
         StartCoroutine(SceneTransition(sceneName));
     }
 
@@ -98,7 +100,10 @@ public class GameManager : MonoBehaviour
         while (currentTime < FadeEffectTime / 2)                // フェードエフェクト時間の半分の時間まで繰り返す
         {
             float alpha = currentTime / (FadeEffectTime / 2);   // 徐々に暗くする
-            FadeImage.color = new Color(0, 0, 0, alpha);        // 算出したアルファ値をセット
+                                                                // 
+            Color currentColor = FadeImage.color;   // 現在の色を取得
+            FadeImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);            // 新しい色を作成（アルファ値だけ変更）
+
             currentTime += Time.deltaTime;
             yield return null;                                  // 次フレームまでウェイト
         }
@@ -111,9 +116,16 @@ public class GameManager : MonoBehaviour
         while (currentTime < FadeEffectTime / 2)                // フェードエフェクト時間の半分の時間まで繰り返す
         {
             float alpha = 1 - (currentTime / (FadeEffectTime / 2));     // 徐々に透明にする
-            FadeImage.color = new Color(0, 0, 0, alpha);     // 算出したアルファ値をセット
+            
+            Color currentColor = FadeImage.color;   // 現在の色を取得
+            FadeImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);            // 新しい色を作成（アルファ値だけ変更）
+
             currentTime += Time.deltaTime;
             yield return null;                               // 次フレームまでウェイト
         }
+
+        // フェードアウト後、完全に透明になるよう担保する
+        Color afterColor = FadeImage.color;
+        FadeImage.color = new Color(afterColor.r, afterColor.g, afterColor.b, 0);
     }
 }
