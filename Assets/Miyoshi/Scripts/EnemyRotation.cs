@@ -32,6 +32,7 @@ public class EnemyRotation : MonoBehaviour
     [SerializeField] public float _interval3 = 1;
 
     private float _timer;
+    public bool _waitTime;
 
     public virtual void Update()
     {
@@ -41,21 +42,28 @@ public class EnemyRotation : MonoBehaviour
         {
             RotateEnemy();
             _interval1 = Random.Range(min1_Interval, max1_Interval);
+            timerStart();
         }
 
         if (_timer >= _interval2 && _versions == 1)
         {
             RotateEnemy();
             _interval2 = Random.Range(min2_Interval, max2_Interval);
+            timerStart();
         }
 
         if (_timer >= _interval3 && _versions == 2)
         {
             RotateEnemy();
             _interval3 = Random.Range(min3_Interval, max3_Interval);
+            timerStart();
         }
     }
-
+    
+    public virtual void timerStart()
+    {
+        _waitTime = true;
+    }
     private void RotateEnemy()
     {
         transform.rotation = Quaternion.Euler(
