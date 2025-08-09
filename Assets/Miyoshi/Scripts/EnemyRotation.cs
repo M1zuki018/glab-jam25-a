@@ -24,7 +24,7 @@ public class EnemyRotation : MonoBehaviour
     [SerializeField] public float _interval1 = 3; // 回転間隔(ランダムに設定される)
     [SerializeField] public float _interval2 = 2; // 回転間隔(ランダムに設定される)
     [SerializeField] public float _interval3 = 1; // 回転間隔(ランダムに設定される)
-    public float _timer;
+    private float _timer;
 
     public virtual void Update()
     {

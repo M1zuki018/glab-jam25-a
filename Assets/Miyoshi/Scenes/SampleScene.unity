@@ -545,10 +545,11 @@ MonoBehaviour:
   min3_Interval: 1
   _versions: 0
   _backInterval: 0.5
-  _rotateAngleY: 45
+  _rotateAngleY: 180
   _interval1: 3
   _interval2: 2
   _interval3: 1
+  _timer: 0
 --- !u!1 &1869692327
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +804,7 @@ MonoBehaviour:
   _interval1: 3
   _interval2: 2
   _interval3: 1
+  _timer: 0
 --- !u!4 &1991439369
 Transform:
   m_ObjectHideFlags: 0
