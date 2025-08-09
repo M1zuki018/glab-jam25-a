@@ -5,20 +5,20 @@ using UnityEngine;
 public class EnemyRotation : MonoBehaviour
 {
     [Header("レベル１の時の最大最小")]
-    [SerializeField] private float max1_Interval = 10; // 回転間隔(秒)
-    [SerializeField] private float min1_Interval = 7; // 回転間隔(秒)
+    [SerializeField] public float max1_Interval = 10; // 回転間隔(秒)
+    [SerializeField] public float min1_Interval = 7; // 回転間隔(秒)
     [Header("レベル２の時の最大最小")]
-    [SerializeField] private float max2_Interval = 5; // 回転間隔(秒)
-    [SerializeField] private float min2_Interval = 1; // 回転間隔(秒)
+    [SerializeField] public float max2_Interval = 5; // 回転間隔(秒)
+    [SerializeField] public float min2_Interval = 1; // 回転間隔(秒)
     [Header("レベル３の時の最大最小")]
-    [SerializeField] private float max3_Interval = 5; // 回転間隔(秒)
-    [SerializeField] private float min3_Interval = 1; // 回転間隔(秒)
+    [SerializeField] public float max3_Interval = 5; // 回転間隔(秒)
+    [SerializeField] public float min3_Interval = 1; // 回転間隔(秒)
     [Header("バージョン管理０，１，２")]
-    [SerializeField] private int _versions = 0; // バージョン管理用の変数
+    [SerializeField] public int _versions = 0; // バージョン管理用の変数
     [Header("元の方向に戻る時間")]
-    [SerializeField] private float _backInterval = 0.5f; // 後ろを向く間隔(秒)
+    [SerializeField] public float _backInterval = 0.5f; // 後ろを向く間隔(秒)
     [Header("回転角度")]
-    [SerializeField] private float _rotateAngleY = 45f; // 1回あたりの回転角度(Y)
+    [SerializeField] public float _rotateAngleY = 45f; // 1回あたりの回転角度(Y)
     protected bool _isBack = false; // 後ろを向いているかどうか
     [Header("それぞれのレベル最初の一回目の時間")]
     [SerializeField] public float _interval1 = 3; // 回転間隔(ランダムに設定される)
