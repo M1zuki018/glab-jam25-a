@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-// 敵の振り向き情報（_isBack）を使いたいため EnemyRotation を継承
 public class QTEController : EnemyRotation
 {
     [Header("UI")]
@@ -11,7 +10,7 @@ public class QTEController : EnemyRotation
     public float qteDuration = 2f;// QTEの制限時間
     public KeyCode[] qteKeys = new KeyCode[]{ KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.W };// ランダムに選ばれるQTEのキー候補
     [Header("QTE対象プレイヤー")]
-    public string playerTag = "Player1";// QTEの対象とするプレイヤーのタグ
+    public GameObject player;// QTEの対象とするプレイヤーのタグ
     private GameObject targetPlayer;// "Player1"タグを持つオブジェクトの参照
     private bool isQTEActive = false;// 現在QTE中かどうか
     private float qteTimer = 0f;// QTE中の経過時間
@@ -21,7 +20,7 @@ public class QTEController : EnemyRotation
     void Start()
     {
         // 最初に Player1 タグのついたオブジェクトを検索して保存
-        targetPlayer = GameObject.FindGameObjectWithTag(playerTag);
+        targetPlayer = GameObject.FindGameObjectWithTag("Player");
     }
     public override void Update()
     {
