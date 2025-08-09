@@ -51,7 +51,7 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    public void PlayBGM(string key)
+    public bool PlayBGM(string key)
     {
         StopBGM();
         var soundData = _soundDataBase.GetSoundData(key);
@@ -59,12 +59,13 @@ public class AudioManager : MonoBehaviour
         if (soundData == null)
         {
             Debug.LogWarning("Sound Data not found: " + key);
-            return;
+            return false;
         }
 
         _bgmSource.PrepareAudioSource(soundData);
 
         _bgmSource.Play();
+        return true;
     }
 
     public void StopBGM()

@@ -121,7 +121,7 @@ public class QTEController : EnemyRotation
             }
             else
             {
-                QTEFailure();
+                //QTEFailure();
                 return;
             }
         }

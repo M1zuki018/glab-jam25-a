@@ -83,7 +83,7 @@ public class QTEController2 : EnemyRotation
             currentKeys[i] = qteKeys[Random.Range(0, qteKeys.Length)];
         }
         // UIにキー列を表示（例：「↑ → ↓」）
-        qteText.text = KeysToText(currentKeys);
+        qteText.text = KeysToText(currentKeys) + "を押せ!";
         qtePanel.SetActive(true);
         Debug.Log("QTE開始：キー列 = " + qteText.text);
     }
@@ -109,7 +109,7 @@ public class QTEController2 : EnemyRotation
             else
             {
                 // 間違ったキーを押した場合は失敗
-                QTEFailure();
+                //QTEFailure();
                 return;
             }
         }
