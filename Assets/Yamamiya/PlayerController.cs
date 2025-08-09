@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
         }
         _animator.SetBool("IsMove", true);
         _player.position += Vector3.forward * _speed * Time.deltaTime;
-        //_distanceGauge.UIUpdate(GetDistance());
+        _distanceGauge.UIUpdate(GetDistance());
         ProceedTarget();
     }
 
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
             
             _player.DOMove(enemyPos.position, _goalDuration).OnComplete (() =>
             {
-                GameManager.Instance.ChangeScene("Result",Color.white);
+                GameManager.Instance.ChangeScene("ResultScene",Color.white);
             });
         }
     }
