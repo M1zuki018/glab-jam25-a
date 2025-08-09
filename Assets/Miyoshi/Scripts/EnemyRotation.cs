@@ -33,6 +33,7 @@ public class EnemyRotation : MonoBehaviour
 
     private float _timer;
     public bool _waitTime;
+    public int _pickCount;
 
     public virtual void Update()
     {
@@ -59,7 +60,7 @@ public class EnemyRotation : MonoBehaviour
             timerStart();
         }
     }
-    
+
     public virtual void timerStart()
     {
         _waitTime = true;
@@ -75,6 +76,22 @@ public class EnemyRotation : MonoBehaviour
         Debug.Log("Rotate: _versions = " + _versions);
         _isBack = true;
         _timer = 0f;
+    }
+
+    public void PickMethod()
+    {
+        if (_versions == 0)
+        {
+            _pickCount = 1;
+        }
+        else if (_versions == 1)
+        {
+            _pickCount = 3;
+        }
+        else if (_versions == 2)
+        {
+            _pickCount = 5;
+        }
     }
 
     // LevelWall に接触したらレベルアップ
