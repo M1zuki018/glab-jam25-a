@@ -8,10 +8,10 @@ public class QTEController2 : EnemyRotation
     public Text qteText;// QTEの指示を表示するテキスト
     [Header("QTE設定")]
     public float qteDuration = 2f;// QTEの制限時間
-    public KeyCode[] qteKeys = new KeyCode[] { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow };// ランダムに選ばれるQTEのキー候補
+    public KeyCode[] qteKeys = new KeyCode[] { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.RightArrow, KeyCode.LeftArrow };// ランダムに選ばれるQTEのキー候補
     [Header("QTE対象プレイヤー")]
-    public GameObject player;// QTEの対象とするプレイヤーのタグ
-    private GameObject targetPlayer;// "Player1"タグを持つオブジェクトの参照
+    //public GameObject player;// QTEの対象とするプレイヤーのタグ
+    private GameObject targetPlayer2;// "Player2"タグを持つオブジェクトの参照
     private bool isQTEActive = false;// 現在QTE中かどうか
     private float qteTimer = 0f;// QTE中の経過時間
     private KeyCode currentKey;// 今回要求するQTEキー
@@ -20,13 +20,13 @@ public class QTEController2 : EnemyRotation
     void Start()
     {
         // 最初に Player1 タグのついたオブジェクトを検索して保存
-        targetPlayer = GameObject.FindGameObjectWithTag("Player");
+        targetPlayer2 = GameObject.FindGameObjectWithTag("Player2");
     }
     public override void Update()
     {
         base.Update();
 
-        if (targetPlayer == null) return;
+        if (targetPlayer2 == null) return;
 
         // 「背を向いた瞬間」かつ QTE中でないなら開始
         if (_isBack && !_prevIsBack && !isQTEActive)
@@ -67,10 +67,10 @@ public class QTEController2 : EnemyRotation
         // ランダムにキーを1つ選ぶ
         currentKey = qteKeys[Random.Range(0, qteKeys.Length)];
         // UIに「〇を押せ！」と表示
-        qteText.text = $"{currentKey} を押せ！";
+        qteText.text = $"{KeyToText(currentKey)} を押せ！";
         // パネル表示
         qtePanel.SetActive(true);
-        Debug.Log("QTE開始：Player1に対してのみ");
+        Debug.Log("QTE開始：Player2に対してのみ");
     }
     // QTE中の入力処理
     private void HandleQTE()
