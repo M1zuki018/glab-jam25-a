@@ -9,13 +9,16 @@ public static class SoundDataUtility
             public static readonly string Button = "Button";
             public static readonly string Success = "Success";
             public static readonly string Miss = "Miss";
+            public static readonly string Turnaround = "Turnaround";
+            public static readonly string hide = "hide";
+            public static readonly string foot = "foot";
         }
 
         public static class Bgm
         {
             public static readonly string InGame = "InGame";
             public static readonly string InTitle = "InTitle";
-            public static readonly string InResult = "Inresult";
+            public static readonly string InResult = "InResult";
         }
     }
 
@@ -30,5 +33,6 @@ public static class SoundDataUtility
         source.playOnAwake = soundData.PlayOnAwake;
         source.loop = soundData.IsLoop;
         source.clip = soundData.Clip;
+        source.volume = soundData.Volume;
     }
 }
