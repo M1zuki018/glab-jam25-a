@@ -31,6 +31,7 @@ public class QTEController : EnemyRotation
     {
         base.Update();
 
+        keySequenceLength = _pickCount;
         if (targetPlayer == null) return;
 
         // 「背を向いた瞬間」かつ QTE中でないなら開始

@@ -30,6 +30,7 @@ public class QTEController2 : EnemyRotation
     public override void Update()
     {
         base.Update();
+        keySequenceLength = _pickCount;
         if (targetPlayer2 == null) return;
         // 背を向いた瞬間かつQTEがまだ始まっていないとき → QTE開始
         if (_isBack && !_prevIsBack && !isQTEActive)
