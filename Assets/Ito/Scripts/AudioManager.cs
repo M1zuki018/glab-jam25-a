@@ -88,36 +88,37 @@ public class AudioManager : MonoBehaviour
             _bgmSource.Play();
         }
     }
-public void PlaySe(string key)
-{
-    var soundData = _soundDataBase.GetSoundData(key);
-    if (soundData == null)
+    public void PlaySe(string key)
     {
-        Debug.LogWarning("Sound Data not found: " + key);
-        return;
+        var soundData = _soundDataBase.GetSoundData(key);
+
+        if (soundData == null)
+        {
+            Debug.LogWarning("Sound Data not found: " + key);
+            return;
+        }
+
+        AudioSource seAudioSource = default;
+        if (_seAudioSourcePools.TryDequeue(out AudioSource source))
+        {
+            seAudioSource = source;
+        }
+        //else
+        {
+            seAudioSource = new GameObject("seAudioSource" + "NewInstance", typeof(AudioSource)).GetComponent<AudioSource>();
+        }
+
+        seAudioSource.PrepareAudioSource(soundData);
+        seAudioSource.gameObject.SetActive(true);
+        seAudioSource.Play();
+
+        StartCoroutine(ReturnToPoolAfterPlaying(seAudioSource));
     }
 
-    AudioSource seAudioSource = default;
-    if (_seAudioSourcePools.TryDequeue(out AudioSource source))
+    private IEnumerator ReturnToPoolAfterPlaying(AudioSource source)
     {
-        seAudioSource = source;
+        yield return new WaitWhile(() => source.isPlaying);
+        source.gameObject.SetActive(false);
+        _seAudioSourcePools.Enqueue(source);
     }
-    else
-    {
-        seAudioSource = new GameObject("seAudioSource" + "NewInstance", typeof(AudioSource)).GetComponent<AudioSource>();
-    }
-
-    seAudioSource.PrepareAudioSource(soundData);
-    seAudioSource.gameObject.SetActive(true);
-    seAudioSource.Play();
-
-    StartCoroutine(ReturnToPoolAfterPlaying(seAudioSource));
-}
-
-private IEnumerator ReturnToPoolAfterPlaying(AudioSource source)
-{
-    yield return new WaitWhile(() => source.isPlaying);
-    source.gameObject.SetActive(false);
-    _seAudioSourcePools.Enqueue(source);
-}
 }

@@ -1,10 +1,11 @@
 ﻿using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] DistanceGauge _distanceGauge;
-    [SerializeField] Transform _targetPos;
+    [SerializeField,Tooltip("ゴールゲームオブジェクト")] GameObject _targetPos;
     [SerializeField] Vector3 _startPos; 
     [SerializeField,Tooltip("ターゲットとの距離")] float _distance;
 
@@ -14,6 +15,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField,Tooltip("移動させるキー")] KeyCode _moveKey;
     GameObject _nearShelter;
     [SerializeField,Tooltip("継続時間")] float _duration;
+    /// <summary>
+    /// プレイヤーが隠れてるかどうか
+    /// </summary>
+    bool _isHidden = false; 
+    /// <summary>
+    /// ゴールしたかどうか
+    /// </summary>
+    bool _isGoal = false;
+    /// <summary>
+    /// スタンを食らっているかどうか
+    /// </summary>
+    bool _isStun = false;
 
     [SerializeField] Animator _animator;
 
@@ -21,7 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         _player = GetComponent<Transform>();
         _startPos = _player.transform.position;
-        _distance = _targetPos.position.z - _player.position.z;
+        _distance = _targetPos.transform.position.z - _player.position.z;
     }
 
     void Update()
@@ -35,16 +48,20 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("IsMove", false);
         }
 
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    HiddenShelter();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            HiddenShelter();
-        }
+        //if (Input.GetKeyDown(KeyCode.Return))
+        //{
+        //    BackOriginalPosX();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            BackOriginalPosX();
-        }
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    StartCoroutine(StunPlayer(1));
+        //}
     }
 
     /// <summary>
@@ -52,9 +69,27 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void MovePlayer()
     {
+        if (_isHidden || _isGoal || _isStun)
+        {
+            return;
+        }
         _animator.SetBool("IsMove", true);
         _player.position += Vector3.forward * _speed * Time.deltaTime;
         _distanceGauge.UIUpdate(GetDistance());
+        ProceedTarget();
+    }
+
+    /// <summary>
+    /// 敵のところまで進む
+    /// </summary>
+    private void ProceedTarget()
+    {
+        if(GetDistance() >= 1)
+        {
+            _isGoal = true;
+            var enemyPos = _targetPos.GetComponentInParent<Transform>();
+            _player.DOMove(enemyPos.position, _duration);
+        }
     }
 
     /// <summary>
@@ -75,6 +110,7 @@ public class PlayerController : MonoBehaviour
         if(_nearShelter != null)
         {
             _player.DOMove(_nearShelter.transform.position - Vector3.forward, _duration);
+            _isHidden = true;
         }
     }
 
@@ -103,17 +139,26 @@ public class PlayerController : MonoBehaviour
         }
         return closest;
     }
-
+    
+    /// <summary>
+    /// 元のx座標に戻る
+    /// </summary>
     public void BackOriginalPosX()
     {
         _player.DOMoveX(_startPos.x, _duration);
+        _isHidden = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    /// <summary>
+    /// プレイヤーを動かせなくなる
+    /// </summary>
+    /// <param name="stunTime"></param>
+    public IEnumerator StunPlayer(float stunTime)
     {
-        if (other.gameObject.CompareTag("Goal"))
-        {
-            //リザルト表示
-        }
+        _isStun = true;
+        Debug.Log("スタン開始");
+        yield return new WaitForSeconds(stunTime);
+        _isStun = false;
+        Debug.Log("スタン解除");
     }
 }

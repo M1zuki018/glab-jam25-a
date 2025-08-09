@@ -32,7 +32,7 @@ public class SoundData
     private bool _playOnAwake;
 
     [SerializeField, Header("ボリューム"),Range(0,1)]
-    private float _Volume;
+    private float _volume;
 
     [SerializeField, Header("AudioClipをアサインする")]
     private AudioClip _clip;
@@ -42,5 +42,6 @@ public class SoundData
     public bool IsLoop => _isLoop;
     public bool PlayOnAwake => _playOnAwake;
     public AudioClip Clip => _clip;
+    public float Volume => _volume;
 }
 
